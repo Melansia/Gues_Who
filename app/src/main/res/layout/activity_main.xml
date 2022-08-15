@@ -22,8 +22,8 @@
         android:id="@+id/llButtons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_margin="5dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -32,29 +32,29 @@
             android:id="@+id/btnAnswer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="1"
-            android:text="Button" />
+            android:onClick="onClickAnswer"
+            android:tag="1" />
 
         <Button
             android:id="@+id/btnAnswer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="2"
-            android:text="Button" />
+            android:onClick="onClickAnswer"
+            android:tag="2" />
 
         <Button
             android:id="@+id/btnAnswer3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="3"
-            android:text="Button" />
+            android:onClick="onClickAnswer"
+            android:tag="3" />
 
         <Button
             android:id="@+id/btnAnswer4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="4"
-            android:text="Button" />
+            android:onClick="onClickAnswer"
+            android:tag="4" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
