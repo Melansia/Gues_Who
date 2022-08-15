@@ -6,8 +6,10 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         btnAnswer4 =  findViewById(R.id.btnAnswer4)
         buttons = arrayListOf(btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4)
         getContent()
+        playGame()
 
     }
 
@@ -85,11 +88,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun playGame() {
-
+        generateQuestion()
+        val task = DownloadImageTask()
+        try {
+            val bitmap = task.execute(urls[numberOfQuestion]).get()
+            if (bitmap != null) {
+                ivImageStar.setImageBitmap(bitmap)
+                for (i in 0..buttons.size) {
+                    if (i == numberOfRightAnswer) {
+                        buttons[i].text = names[numberOfQuestion]
+                    } else {
+                        val wrongAnswer = generateWrongAnswer()
+                        buttons[i].text = names[wrongAnswer]
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.message
+        }
     }
 
     private fun generateQuestion() {
+        numberOfQuestion = (Math.random() * names.size).toInt()
+        numberOfRightAnswer = (Math.random() * buttons.size).toInt()
+    }
 
+    private fun generateWrongAnswer(): Int {
+        return (Math.random() * names.size).toInt()
     }
 
     private class DownloadContentTask: AsyncTask<String, Void, String>() {
@@ -144,5 +169,16 @@ class MainActivity : AppCompatActivity() {
             }
             return null
         }
+    }
+
+    fun onClickAnswer(view: View) {
+        val button = view as Button
+        val tag = button.tag.toString()
+        if (tag.toInt()-1 == numberOfRightAnswer) {
+            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Incorrect, the correct answer is: ${names[numberOfQuestion]}", Toast.LENGTH_SHORT).show()
+        }
+        playGame()
     }
 }
